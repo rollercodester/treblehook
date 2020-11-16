@@ -1,15 +1,15 @@
 
 <div>
-  <img height="180" alt='treble-hook' src='https://raw.githubusercontent.com/rollercodester/treblehook/master/doc-assets/treble-hook-3.png'/>
+  <img height="180" alt='treble-hook' src='https://raw.githubusercontent.com/rollercodester/treblehook/main/doc-assets/treble-hook-3.png'/>
     <h3>
     <i>Simple, lightweight state management library for ReactJS with zero dependencies, weighing in at <a href="https://bundlephobia.com/result?p=treble-hook@latest">just under 900 bytes (gzip)</a>.</i>
   </h3>
   <br />
   <div style="float:left;">
     <a href="https://www.npmjs.com/package/treble-hook" rel="nofollow"><img src="https://img.shields.io/npm/v/treble-hook.svg?style=flat" alt="version"></a>
-    <img src="https://img.shields.io/travis/rollercodester/treblehook.svg?branch=master&style=flat" alt="Build Status">
+    <img src="https://img.shields.io/travis/rollercodester/treblehook.svg?branch=main&style=flat" alt="Build Status">
     <a href="http://www.npmtrends.com/treble-hook" rel="nofollow"><img src="https://img.shields.io/npm/dm/treble-hook.svg?style=flat" alt="downloads"></a>
-    <a href="https://github.com/rollercodester/treblehook/blob/master/LICENSE" rel="nofollow"><img src="https://img.shields.io/npm/l/treble-hook.svg?style=flat" alt="MIT License"></a>
+    <a href="https://github.com/rollercodester/treblehook/blob/main/LICENSE" rel="nofollow"><img src="https://img.shields.io/npm/l/treble-hook.svg?style=flat" alt="MIT License"></a>
   </div>
 </div>
 
