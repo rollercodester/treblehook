@@ -122,8 +122,8 @@ export default (function TrebleHookPublisherFactory() {
 })()
 
 /**
- * Hook that subscribes to a topic
- * @param topic The topic to subscribe to.
+ * Hook that subscribes to a topic with publishing capability
+ * @param topic The topic to subscribe/publish to.
  */
 export function usePubSub<T>(topic: string) {
 
@@ -138,13 +138,58 @@ export function usePubSub<T>(topic: string) {
   )
 
   if (!context) {
-    throw new Error(
-      `The "${topic} topic must be used within the context of a TrebleHook publisher.
-         Please wrap your App component with a TrebleHook publisher.`
-    )
+    throw new Error(getNoContextErrorMessage(topic))
   }
 
   return context
+
+}
+
+/**
+ * Hook that subscribes to a topic
+ * @param topic The topic to subscribe to.
+ */
+export function useSub<T>(topic: string) {
+
+  if (!topicsCache[topic]) {
+    throw new Error(getNoTopicErrorMessage(topic))
+  }
+
+  const topicDef = topicsCache[topic]
+
+  const context = useContext<PubSubTuple<T>>(
+    topicDef.context as Context<PubSubTuple<T>>
+  )
+
+  if (!context) {
+    throw new Error(getNoContextErrorMessage(topic))
+  }
+
+  return context[0]
+
+}
+
+/**
+ * Hook that publishes to a topic
+ * @param topic The topic to publish to.
+ */
+export function usePub<T>(topic: string) {
+
+  if (!topicsCache[topic]) {
+    throw new Error(getNoTopicErrorMessage(topic))
+  }
+
+  const topicDef = topicsCache[topic]
+
+  const context = useContext<PubSubTuple<T>>(
+    topicDef.context as Context<PubSubTuple<T>>
+  )
+
+  if (!context) {
+    throw new Error(getNoContextErrorMessage(topic))
+  }
+
+  return context[1]
 
 }
 
@@ -163,14 +208,6 @@ export type Publish<T> = Dispatch<SetStateAction<T>>
  * Signature for state and publish tuple
  */
 export type PubSubTuple<T> = [T, Publish<T>]
-
-/**
- * Positional indexes for the tuple that is returned by usePubSub.
- */
-export enum PubSubTupleIndex {
-  State = 0,
-  Publish = 1,
-}
 
 interface Topic {
   [name: string]: {
@@ -232,6 +269,11 @@ function createPublishProvider<T>(
 
   }
 
+}
+
+function getNoContextErrorMessage(topicName: string) {
+  return `The "${topicName} topic must be used within the context of a TrebleHook publisher.
+  Please wrap your App component with a TrebleHook publisher.`
 }
 
 function getNoTopicErrorMessage(topicName: string) {

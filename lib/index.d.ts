@@ -7,9 +7,7 @@ declare const _default: {
 };
 export default _default;
 export declare function usePubSub<T>(topic: string): [T, React.Dispatch<React.SetStateAction<T>>];
+export declare function useSub<T>(topic: string): T;
+export declare function usePub<T>(topic: string): React.Dispatch<React.SetStateAction<T>>;
 export declare type Publish<T> = Dispatch<SetStateAction<T>>;
 export declare type PubSubTuple<T> = [T, Publish<T>];
-export declare enum PubSubTupleIndex {
-    State = 0,
-    Publish = 1
-}

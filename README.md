@@ -35,11 +35,11 @@ or
 # Quick Start
 
 ```jsx
-import trebleHook, { usePubSub } from 'treble-hook'
+import trebleHook, { usePub, useSub } from 'treble-hook'
 
 // Welcome.jsx
 export default function Welcome() {
-  const [guestName] = usePubSub('guest')
+  const guestName = useSub('guest')
 
   return (
     <h3>Welcome to treble-hook, {guestName || ''}!</h3>
@@ -48,7 +48,7 @@ export default function Welcome() {
 
 // GuestEntry.jsx
 export default function GuestEntry() {
-  const [, pubGuestName] = usePubSub('guest')
+  const pubGuestName = usePub('guest')
 
   return (
     <div>
@@ -140,7 +140,7 @@ return (
 
 ## <ins>usePubSub</ins>
 
-A React hook that subscribes a component to a topic. The hook returns a tuple that is similar to the tuple returned from `useState` where the first element is the topic's current state value and the second element is the method to publish a new state value for the topic.
+A hook that subscribes a component to a topic with capability to publish. The hook returns a tuple that is similar to the tuple returned from `useState` where the first element is the topic's current state value and the second element is the method to publish a new state value for the topic.
 
 ```ts
 usePubSub<T>(topic: string): PubSubTuple<T>
@@ -198,6 +198,64 @@ function FruitStand() {
 ```
 
 <br/>
+
+## <ins>usePub</ins>
+
+A hook returning a function that publishes to a topic.
+
+**IMPORTANT**: Even though this hook only returns the publish function, it will still cause a re-render whenever a value for respective topic is published outside the scope of this component (i.e. when published from another component).
+
+```ts
+usePub<T>(topic: string): (value: T) => void
+```
+
+<ins>Example:</ins>
+
+```tsx
+import { usePub } from 'treble-hook'
+
+function FruitVendor() {
+  const pubApples = usePub<number>('apples')
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          pubApples(100)
+        }}
+      >
+        Reset apples
+      </button>
+    </div>
+  )
+}
+```
+
+<br/>
+
+## <ins>useSub</ins>
+
+A hook returning a function that subscribes to a topic.
+
+```ts
+useSub<T>(topic: string): T
+```
+
+<ins>Example:</ins>
+
+```tsx
+import { useSub } from 'treble-hook'
+
+function FruitVendor() {
+  const apples = useSub<number>('apples')
+
+  return (
+    <div>
+      Apply quantity: {apples}
+    </div>
+  )
+}
+```
 
 # Liscense
 
